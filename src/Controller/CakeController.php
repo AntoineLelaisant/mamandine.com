@@ -10,12 +10,14 @@ use App\Form\Type\CreateCake;
 
 class CakeController extends Controller
 {
-    public function list()
+    public function list(Request $request)
     {
+        $q = $request->query->get('q');
+
         $cakes = $this
             ->getDoctrine()
             ->getRepository(Cake::class)
-            ->findAll()
+            ->search($q)
         ;
 
         return $this->render('cake/list.html.twig', [
