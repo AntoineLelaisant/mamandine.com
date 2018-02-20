@@ -6,7 +6,11 @@
         <header>
             <h1>Create a cake</h1>
         </header>
-        {{ form_start(form) }}
+        {{ form_start(form, {
+            'attr': { 
+                'novalidate': 'novalidate'
+            }
+        }) }}
             {{ form_widget(form) }}
             <div class="row">
                 <div class="col">
