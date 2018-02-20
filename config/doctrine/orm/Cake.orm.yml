@@ -22,3 +22,15 @@ App\Entity\Cake:
 
     createdAt:
       type: datetime
+
+  manyToMany:
+    categories:
+      targetEntity: App\Entity\Category
+      joinTable:
+        name: cake_category
+        joinColumns:
+          cake_id:
+            referencedColumnName: id
+        inversedJoinColumns:
+          category_id:
+            referencedColumnName: id
