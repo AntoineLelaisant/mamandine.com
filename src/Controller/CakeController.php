@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\Type\CreateCake;
 
 class CakeController extends Controller
 {
@@ -50,10 +52,35 @@ class CakeController extends Controller
         ]);
     }
 
-    public function create() {
+    public function create(Request $request)
+    {
+        $form = $this->createForm(CreateCake::class);
 
+        $form->handleRequest($request);
 
-        return $this->render('cake/create.html.twig');
+        if ($form->isSubmitted() && $form->isValid()) {
+            $name = $form->get('name')->getData();
+            $description = $form->get('description')->getData();
+            $price = $form->get('price')->getData();
+            $image = $form->get('image')->getData();
+            $createdAt = (new \DateTime())->format(\DateTime::RFC3339);
+
+            $this
+                ->getPdo()
+                ->query('
+                    INSERT INTO cake(`name`, `description`, `price`, `created_at`, `image`)
+                    VALUES ("'.$name.'", "'.$description.'", "'.$price.'", "'.$createdAt.'", "'.$image.'");
+                ')
+            ;
+
+            $this->addFlash('success', 'The cake has been created.');
+
+            return $this->redirectToRoute('app_cake_list');
+        }
+
+        return $this->render('cake/create.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     private function getPdo()

@@ -24,6 +24,19 @@
             </form>
           </div>
         </nav>
+
+        {% if app.session.flashbag.peekAll %}
+            <div class="container">
+                {% for name, messages in app.session.flashbag.all %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ name }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <div id="container">
             {% block content %}{% endblock %}
         </div>
