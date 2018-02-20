@@ -1,0 +1,24 @@
+App\Entity\Cake:
+  type: entity
+
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+
+  fields:
+    name:
+      type: string
+
+    description:
+      type: text
+
+    price:
+      type: string
+
+    image:
+      type: string
+
+    createdAt:
+      type: datetime

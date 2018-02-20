@@ -8,11 +8,7 @@ parameters:
 doctrine:
     dbal:
         # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
-
-        # With Symfony 3.3, remove the `resolve:` prefix
+        driver: 'pdo_sqlite'
         url: '%env(resolve:DATABASE_URL)%'
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
@@ -21,7 +17,8 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
+                mapping: true
+                type: yml
+                dir: '%kernel.project_dir%/config/doctrine/orm/'
                 prefix: 'App\Entity'
                 alias: App
