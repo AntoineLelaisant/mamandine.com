@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class Cake
 {
@@ -11,10 +12,12 @@ class Cake
     private $description;
     private $price;
     private $image;
+    private $categories;
     private $createdAt;
 
     public function __construct()
     {
+        $this->categories = new ArrayCollection();
         $this->createdAt = new DateTime();
     }
 
@@ -66,6 +69,16 @@ class Cake
     public function setImage(string $image)
     {
         $this->image = $image;
+    }
+
+    public function addCategory(Category $category)
+    {
+        $this->categories->add($category);
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     public function getCreatedAt()
