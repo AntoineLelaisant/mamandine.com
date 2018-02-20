@@ -2,12 +2,31 @@
 
 namespace App\Entity;
 
+use DateTime;
+
 class Cake
 {
+    private $id;
     private $name;
     private $description;
     private $price;
     private $image;
+    private $createdAt;
+
+    public function __construct()
+    {
+        $this->createdAt = new DateTime();
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
 
     public function setName(string $name)
     {
@@ -47,5 +66,17 @@ class Cake
     public function setImage(string $image)
     {
         $this->image = $image;
+    }
+
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
     }
 }

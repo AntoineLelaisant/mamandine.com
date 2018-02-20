@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Cake;
 use App\Form\Type\CreateCake;
 
 class CakeController extends Controller
@@ -14,9 +15,9 @@ class CakeController extends Controller
     public function list()
     {
         $cakes = $this
-            ->getPdo()
-            ->query('SELECT * FROM cake ORDER BY created_at DESC')
-            ->fetchAll()
+            ->getDoctrine()
+            ->getRepository(Cake::class)
+            ->findAll()
         ;
 
         return $this->render('cake/list.html.twig', [
@@ -27,12 +28,12 @@ class CakeController extends Controller
     public function show($cakeId)
     {
         $cake = $this
-            ->getPdo()
-            ->query(sprintf('SELECT * FROM cake WHERE id = %d', $cakeId))
-            ->fetch()
+            ->getDoctrine()
+            ->getRepository(Cake::class)
+            ->find($cakeId)
         ;
 
-        if (!$cake) {
+        if (null === $cake) {
             throw $this->createNotFoundException(sprintf('The cake with id "%s" was not found.', $cakeId));
         }
 
@@ -59,19 +60,11 @@ class CakeController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $name = $form->get('name')->getData();
-            $description = $form->get('description')->getData();
-            $price = $form->get('price')->getData();
-            $image = $form->get('image')->getData();
-            $createdAt = (new \DateTime())->format(\DateTime::RFC3339);
+            $cake = $form->getData();
 
-            $this
-                ->getPdo()
-                ->query('
-                    INSERT INTO cake(`name`, `description`, `price`, `created_at`, `image`)
-                    VALUES ("'.$name.'", "'.$description.'", "'.$price.'", "'.$createdAt.'", "'.$image.'");
-                ')
-            ;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($cake);
+            $em->flush();
 
             $this->addFlash('success', 'The cake has been created.');
 
