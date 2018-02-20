@@ -1,0 +1,28 @@
+App\Entity\User:
+  type: entity
+  repositoryClass: App\Repository\UserRepository
+
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+
+  fields:
+    firstName:
+      type: string
+
+    lastName:
+      type: string
+
+    email:
+      type: string
+
+    password:
+      type: string
+
+    createdAt:
+      type: datetime
+
+    roles:
+      type: array

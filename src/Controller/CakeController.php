@@ -44,6 +44,8 @@ class CakeController extends Controller
 
     public function create(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         $form = $this->createForm(CreateCake::class);
 
         $form->handleRequest($request);
