@@ -21,7 +21,7 @@ class CakeRepository extends ServiceEntityRepository
             ->where('id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResults()
+            ->getResult()
         ;
     }
 
@@ -33,7 +33,7 @@ class CakeRepository extends ServiceEntityRepository
             ->where('cake.categories IN :category')
             ->setParameter('category', $category)
             ->getQuery()
-            ->getResults()
+            ->getResult()
         ;
     }
 
