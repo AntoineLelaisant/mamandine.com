@@ -1,0 +1,14 @@
+app_cake_list:
+  path: /{_locale}/cakes
+  controller: App\Controller\CakeController::list
+
+app_cake_show:
+  path: /{_locale}/cakes/{cakeId}
+  controller: App\Controller\CakeController::show
+  requirements:
+    cakeId: '\d+'
+
+app_cake_create:
+  path: /{_locale}/cakes/create
+  controller: App\Controller\CakeController::create
+
