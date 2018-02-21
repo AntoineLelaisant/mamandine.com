@@ -1,0 +1,9 @@
+<div>
+    <h1>Hi {{ recipient }}</h1>
+    <h2>Here are the cakes we have</h2>
+    <ul>
+        {% for cake in cakes %}
+            <li>{{ cake.name }}</li>
+        {% endfor %}
+    </ul>
+</div>

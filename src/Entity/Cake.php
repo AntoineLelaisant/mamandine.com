@@ -92,4 +92,10 @@ class Cake
 
         return $this;
     }
+
+    public function prepare()
+    {
+        // Let's emulate it takes a long time to create a cake
+        sleep(1);
+    }
 }
