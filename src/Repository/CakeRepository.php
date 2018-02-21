@@ -13,6 +13,30 @@ class CakeRepository extends ServiceEntityRepository
         parent::__construct($registry, Cake::class);
     }
 
+    public function find($id)
+    {
+        return $this
+            ->createQueryBuilder('cake')
+            ->addSelect('cake.categories')
+            ->where('id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResults()
+        ;
+    }
+
+    public function findByCategory(Category $category)
+    {
+        return $this
+            ->createQueryBuilder('cake')
+            ->addSelect('cake.categories')
+            ->where('cake.categories IN :category')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->getResults()
+        ;
+    }
+
     public function search(string $q = null)
     {
         if (null === $q) {
@@ -21,6 +45,7 @@ class CakeRepository extends ServiceEntityRepository
 
         return $this
             ->createQueryBuilder('cake')
+            ->addSelect('cake.categories')
             ->where('LOWER(cake.name) LIKE LOWER(:q)')
             ->setParameter('q', "%$q%")
             ->getQuery()
