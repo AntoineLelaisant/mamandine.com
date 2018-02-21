@@ -7,16 +7,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Cake;
 use App\Form\Type\CreateCake;
+use App\Repository\CakeRepository;
 
 class CakeController extends Controller
 {
+    private $cakeRepository;
+
+    public function __construct(CakeRepository $cakeRepository)
+    {
+        $this->cakeRepository = $cakeRepository;
+    }
+
     public function list(Request $request)
     {
         $q = $request->query->get('q');
 
         $cakes = $this
-            ->getDoctrine()
-            ->getRepository(Cake::class)
+            ->cakeRepository
             ->search($q)
         ;
 
@@ -28,8 +35,7 @@ class CakeController extends Controller
     public function show($cakeId)
     {
         $cake = $this
-            ->getDoctrine()
-            ->getRepository(Cake::class)
+            ->cakeRepository
             ->find($cakeId)
         ;
 
