@@ -8,14 +8,17 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Cake;
 use App\Form\Type\CreateCake;
 use App\Repository\CakeRepository;
+use Symfony\Component\Translation\TranslatorInterface;
+use App\Heavy\CachedBigDataLoader;
 
 class CakeController extends Controller
 {
     private $cakeRepository;
 
-    public function __construct(CakeRepository $cakeRepository)
+    public function __construct(CakeRepository $cakeRepository, TranslatorInterface $translator)
     {
         $this->cakeRepository = $cakeRepository;
+        $this->translator = $translator;
     }
 
     public function list(Request $request)
@@ -24,8 +27,11 @@ class CakeController extends Controller
 
         $cakes = $this
             ->cakeRepository
-            ->search($q)
+            ->findAllAsArray()
+//            ->search($q)
         ;
+
+        dump($cakes);
 
         return $this->render('cake/list.html.twig', [
             'cakes' => $cakes,

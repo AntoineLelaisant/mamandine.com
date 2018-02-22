@@ -5,6 +5,7 @@ namespace App\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use App\Entity\Cake;
+use Doctrine\ORM\AbstractQuery;
 
 class CakeRepository extends ServiceEntityRepository
 {
@@ -24,6 +25,15 @@ class CakeRepository extends ServiceEntityRepository
             ->addSelect('cake.categories')
             ->where('LOWER(cake.name) LIKE LOWER(:q)')
             ->setParameter('q', "%$q%")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findAllAsArray()
+    {
+        return $this
+            ->createQueryBuilder('cake')
             ->getQuery()
             ->getResult()
         ;

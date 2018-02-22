@@ -13,6 +13,7 @@ class User implements UserInterface
     private $email;
     private $password;
     private $roles;
+    private $image;
     private $createdAt;
 
     public function __construct()

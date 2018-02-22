@@ -1,0 +1,3 @@
+app_internet:
+    path: /internet
+    controller: App\Controller\InternetController
