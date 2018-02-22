@@ -15,6 +15,11 @@
                         {% endfor %}
                     </p>
                     <p>{{ cake.description }}</p>
+                    {% if is_granted('VIEW', cake) %}
+                        <h1>You're allowed</h1>
+                        {% else %}
+                        <h1>You're not allowed</h1>
+                    {% endif %}
                 </div>
             </div>
         </article>
